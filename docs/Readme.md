@@ -3,6 +3,7 @@
 ##### Projeyi Ayağa Kaldırmak
 
 Proje Code First mantığıyla oluşturulmuştur. Bu şekilde kod tarafından veri tabanını ayağa kaldırabileceğiz.
+Seed ile adı ve şifresi "test" olan bir kullanıcı eklendi.
 Veritabanı olarak postgre sql kullanıldı. Hem open source olması hem de platform bağımsız çalışması dolayısıyla seçildi.
 Burada context yapısı ile hem farklı projeler için farklı veri tabanları imkanı sağlanmaktadır hem de veri tabanı bağımlılığı kaldırılmıştır.
 Yine ileride geçilebilecek microservice yapısına hazırlık olarak da kullanılmak mümkün olabilir.
@@ -31,6 +32,9 @@ Yine ileride geçilebilecek microservice yapısına hazırlık olarak da kullan�
 ## Diğer Notlar
 - Sonarqube'in client tarafında çalışan sonarlint extension ile teknik borç sıfıra çekildi.
     https://medium.com/software-development-turkey/sonarlint-ile-refactoring-teknik-borcu-azaltma-7d3da6c92f19
+
+- Clr Heap Allocation Analyzer ile bellek yönetimi yapıldı. Kod tarafındaki exlicit açıklaması bununla ilgilidir.
+    https://marketplace.visualstudio.com/items?itemName=MukulSabharwal.ClrHeapAllocationAnalyzer&ssr=false#overview
 
 ## Eklenebilecekler
 - HealthCore ile servislerin çalışırlığını testen eden bir sistem de kurulabilirdi.

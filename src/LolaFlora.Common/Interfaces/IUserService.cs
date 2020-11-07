@@ -1,13 +1,14 @@
 ﻿using LolaFlora.Common.Models;
 using LolaFlora.Data.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LolaFlora.Common.Interfaces
 {
     public interface IUserService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
-        User GetById(long id);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+        Task<List<User>> GetAll();
+        Task<User> GetById(long id);
     }
 }

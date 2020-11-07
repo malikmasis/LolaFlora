@@ -1,10 +1,15 @@
 ﻿using LolaFlora.Common.Interfaces;
 using LolaFlora.Common.Models;
+using LolaFlora.Common.Result;
+using LolaFlora.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LolaFlora.Web.Controllers
 {
@@ -18,11 +23,15 @@ namespace LolaFlora.Web.Controllers
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate(AuthenticateRequest model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model is not well defined");
+            }
             Log.Information("authenticate starting");
 
-            var response = _userService.Authenticate(model);
+            var response = await _userService.Authenticate(model);
 
             if (response == null)
                 return BadRequest(new { message = Localizer["Username or password is incorrect"] });
@@ -34,10 +43,18 @@ namespace LolaFlora.Web.Controllers
 
         [Authorize]
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public async Task<ActionResult<DataApiResult<List<User>>>> GetAll()
         {
-            var users = _userService.GetAll();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetAll();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Unhandled", new object[1] { ex });
+                return BadRequest();
+            }
         }
     }
 }
