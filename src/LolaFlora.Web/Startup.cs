@@ -1,8 +1,12 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using LolaFlora.Common.Interfaces;
+using LolaFlora.Data.Entities;
 using LolaFlora.Web.AppSettings;
 using LolaFlora.Web.DBContext;
 using LolaFlora.Web.Middlewares;
 using LolaFlora.Web.Services;
+using LolaFlora.Web.Validator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +56,9 @@ namespace LolaFlora.Web
             .AddDataAnnotationsLocalization(options =>
             {
                 options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+            }).AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssemblyContaining<Startup>();
             });
 
             services.Configure<JwtOption>(Configuration.GetSection("JwtOption"));
@@ -64,6 +71,8 @@ namespace LolaFlora.Web
                 .AddSwaggerGen();
 
             services.AddPgsqlDbContext(Configuration);
+
+            services.AddSingleton<IValidator<User>, UserValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -43,7 +43,7 @@ namespace LolaFlora.Web.Controllers
 
         [Authorize]
         [HttpGet("GetAll")]
-        public async Task<ActionResult<DataApiResult<List<User>>>> GetAll()
+        public async Task<ActionResult<List<User>>> GetAll()
         {
             try
             {
