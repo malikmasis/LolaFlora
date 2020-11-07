@@ -7,6 +7,7 @@ namespace LolaFlora.Data.Base
 {
     public class LolaFloraDbContext : DbContext
     {
+        public static readonly User Test = new User { Id = 1, Name = "test", Username = "test", Password = "test", CreatedDateTime = DateTime.UtcNow };
 
         public LolaFloraDbContext(DbContextOptions options) : base(options)
         {
@@ -30,10 +31,6 @@ namespace LolaFlora.Data.Base
             foreach (var entityEntry in entries)
             {
                 ((BaseEntity)entityEntry.Entity).UpdatedDateTime = DateTime.UtcNow;
-                //if (entityEntry.State == EntityState.Added)
-                //{
-                //    ((BaseEntity)entityEntry.Entity).CreatedDateTime = DateTime.UtcNow;
-                //}
             }
         }
     }

@@ -1,5 +1,7 @@
+using LolaFlora.Web.DBContext;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -37,7 +39,18 @@ namespace LolaFlora.Web
             try
             {
                 Log.Information("Starting");
-                /// DB Seeding
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    try
+                    {
+                        PgsqlDbContext.EnsureCreated(services);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Fatal(ex, "An error occurred seeding the DB.");
+                    }
+                }
             }
             catch (Exception ex)
             {
