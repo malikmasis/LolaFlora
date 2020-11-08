@@ -52,5 +52,6 @@ Yine ileride geçilebilecek microservice yapısına hazırlık olarak da kullan�
 
 - Automapper benzeri araçlar ile modeller maplenebilir
 
-- 
+- Loglama kısmı mondgo db'ye kaydırabilirdi.
 
+- Unit test coverage %90'ların üzerine çekilebilirdi.
