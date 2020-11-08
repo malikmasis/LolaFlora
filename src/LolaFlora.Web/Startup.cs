@@ -65,6 +65,7 @@ namespace LolaFlora.Web
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICartService, CartService>();
 
             //already added AddApiExplorer in AddControllers
             services

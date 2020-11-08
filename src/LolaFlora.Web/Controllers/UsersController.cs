@@ -43,6 +43,7 @@ namespace LolaFlora.Web.Controllers
 
         [Authorize]
         [HttpGet("GetAll")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<List<User>>> GetAll()
         {
             try
@@ -53,7 +54,7 @@ namespace LolaFlora.Web.Controllers
             catch (Exception ex)
             {
                 Logger.LogError("Unhandled", new object[1] { ex });
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
     }

@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "d9dfaa89-0075-4b4a-84c7-90a35fdbb7f8",
+		"name": "LolaFlora",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:5001/Cart/gotocart?customerId=1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Cart/gotocart?customerId=1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Cart",
+						"gotocart"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/Users/authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"test\",\r\n  \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Users/authenticate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Users",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/Cart/addtocart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":1,\r\n    \"productId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Cart/addtocart",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Cart",
+						"addtocart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/Cart/removefromcart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\":1,\r\n    \"productId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/Cart/removefromcart",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Cart",
+						"removefromcart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/Cart/emptycart?customerId=1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/Cart/emptycart?customerId=1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"Cart",
+						"emptycart"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

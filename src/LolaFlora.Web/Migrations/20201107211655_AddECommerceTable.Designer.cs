@@ -3,15 +3,17 @@ using System;
 using LolaFlora.Web.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LolaFlora.Web.Migrations
 {
     [DbContext(typeof(PgsqlDbContext))]
-    partial class PgsqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201107211655_AddECommerceTable")]
+    partial class AddECommerceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +38,6 @@ namespace LolaFlora.Web.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedUser")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateTime")
@@ -118,9 +117,6 @@ namespace LolaFlora.Web.Migrations
 
                     b.Property<string>("Price")
                         .HasColumnType("text");
-
-                    b.Property<long>("Quantity")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("timestamp without time zone");

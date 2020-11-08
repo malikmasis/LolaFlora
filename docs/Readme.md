@@ -12,6 +12,8 @@ Yine ileride geçilebilecek microservice yapısına hazırlık olarak da kullan�
 * update-database -context PgsqlDbContext -> .net core console için : dotnet ef database update --context PgsqlDbContext
 ```
 
+Önemli Not: Projede migrationlar mevcut iken her hangi bir ayarlama yapmadan sadece çalıştırmanız yeterli olacaktır.
+
 #### Yaptığım Kodlama ile ilgili 
 1- Tüm işlemlerden önce loglama kuruldu. Serilog tercih edildi. Seq uygulaması ile detaylı arama yapılabilir. 15 microservise kadar loglama desteklemektedir.
 

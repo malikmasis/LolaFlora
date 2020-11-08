@@ -1,41 +1,85 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using LolaFlora.Common.Interfaces;
 using LolaFlora.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace LolaFlora.Web.Controllers
 {
     public class CartController : BaseController<CartController>
     {
-
-        public CartController(ILogger<CartController> logger, IStringLocalizer<SharedResource> localizer):base(logger,localizer)
+        private readonly ICartService _cartService;
+        public CartController(ILogger<CartController> logger, IStringLocalizer<SharedResource> localizer, ICartService cartService) : base(logger, localizer)
         {
+            _cartService = cartService;
         }
 
-        [HttpGet]
-        public IEnumerable<Cart> Get()
+        [HttpGet("gotocart")]
+        public async Task<ActionResult<Cart>> GotoCart([FromQuery] long customerId)
         {
-            return Enumerable.Range(1, 5).Select(index => new Cart
+            try
             {
-                MinCount  = 2
-            })
-            .ToArray();
-        }
-
-        public IActionResult Post(Cart cart)
-        {
-            Logger.Log(LogLevel.Information, Localizer["Hello"]);
-
-            int f = cart?.MinCount ?? 0;
-            if (ModelState.IsValid && f > 0)
-            {
-                return Ok(Get());
+                var cart = await _cartService.GetAll(customerId);
+                return Ok(cart);
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(ModelState);
+                Logger.LogError("Unhandled", new object[1] { ex });
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("addtocart")]
+        public async Task<ActionResult<bool>> AddToCart([FromBody]Cart cart)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model is not well defined");
+            }
+            try
+            {
+                //If the user is not the logged in the system - UI will send a unique Id
+                return  Ok(await _cartService.AddProduction(cart.UserId, cart.ProductId));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Unhandled", new object[1] { ex });
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("removefromcart")]
+        public async Task<ActionResult<bool>> RemoveFromCart([FromBody] Cart cart)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model is not well defined");
+            }
+            try
+            {
+                //If the user is not the logged in the system - UI will send a unique Id
+                return Ok(await _cartService.RemoveProduction(cart.UserId, cart.ProductId));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Unhandled", new object[1] { ex });
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("emptycart")]
+        public async Task<ActionResult<bool>> EmptyCart([FromQuery] long customerId)
+        {
+            try
+            {
+                return Ok(await _cartService.RemoveAll(customerId));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Unhandled", new object[1] { ex });
+                return BadRequest(ex);
             }
         }
     }

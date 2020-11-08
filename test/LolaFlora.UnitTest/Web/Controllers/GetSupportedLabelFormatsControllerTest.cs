@@ -15,8 +15,8 @@ namespace LolaFlora.UnitTest.Web.Controllers
             var mLog = Mock.Of<ILogger<CartController>>();
             var mLocalizer = Mock.Of<IStringLocalizer<SharedResource>>();
 
-            var controller = new CartController(mLog, mLocalizer);
-            var reponse = controller.Get();
+            var controller = new CartController(mLog, mLocalizer,null);
+            var reponse = controller.GotoCart(1);
             Assert.Null(reponse);
         }
     }
