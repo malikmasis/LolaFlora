@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LolaFlora.Web.Migrations
 {
     [DbContext(typeof(PgsqlDbContext))]
-    [Migration("20201107211655_AddECommerceTable")]
-    partial class AddECommerceTable
+    [Migration("20201108144824_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,9 @@ namespace LolaFlora.Web.Migrations
                     b.Property<long?>("DeletedUser")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -50,6 +53,8 @@ namespace LolaFlora.Web.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Cart");
                 });
@@ -94,9 +99,6 @@ namespace LolaFlora.Web.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("CartId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
@@ -118,6 +120,9 @@ namespace LolaFlora.Web.Migrations
                     b.Property<string>("Price")
                         .HasColumnType("text");
 
+                    b.Property<long>("Quantity")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -125,8 +130,6 @@ namespace LolaFlora.Web.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("Products");
                 });
@@ -173,11 +176,13 @@ namespace LolaFlora.Web.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LolaFlora.Data.Entities.Product", b =>
+            modelBuilder.Entity("LolaFlora.Data.Entities.Cart", b =>
                 {
-                    b.HasOne("LolaFlora.Data.Entities.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
+                    b.HasOne("LolaFlora.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

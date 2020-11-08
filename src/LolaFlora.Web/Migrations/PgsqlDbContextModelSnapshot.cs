@@ -52,6 +52,8 @@ namespace LolaFlora.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Cart");
                 });
 
@@ -95,9 +97,6 @@ namespace LolaFlora.Web.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("CartId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
@@ -129,8 +128,6 @@ namespace LolaFlora.Web.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("Products");
                 });
@@ -177,11 +174,13 @@ namespace LolaFlora.Web.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LolaFlora.Data.Entities.Product", b =>
+            modelBuilder.Entity("LolaFlora.Data.Entities.Cart", b =>
                 {
-                    b.HasOne("LolaFlora.Data.Entities.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
+                    b.HasOne("LolaFlora.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
